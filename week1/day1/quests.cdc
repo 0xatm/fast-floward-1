@@ -43,17 +43,17 @@ pub fun display(canvas: Canvas) {
 
 /* ====== W1Q2 STARTS ====== */
 pub resource Printer {
-  pub let array: [String]
+  pub let prints: {String: Bool}
 
   init() {
-    self.array = []
+    self.prints = {}
   }
 
   pub fun print(canvas: Canvas): @Picture? {
-    if(!self.array.contains(canvas.pixels)) {
-      self.array.append(canvas.pixels)
+    if(!self.prints.containsKey(canvas.pixels)) {
       let picture <- create Picture(canvas: canvas)
       display(canvas: picture.canvas)
+      self.prints.insert(key: canvas.pixels, true)
       return <- picture
     }
     return nil
